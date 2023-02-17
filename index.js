@@ -1,6 +1,6 @@
 const express = require('express');
 const app = express();
-const port = 3000; // El puerto en el que se ejecutará el servidor
+const PORT = process.env.PORT || 3000; // El puerto en el que se ejecutará el servidor
 
 const cors = require('cors');
 const morgan = require('morgan');
@@ -16,6 +16,6 @@ app.use(express.json());
 app.use('/api', pruebasRoutes);
 
 // Arrancamos el servidor
-app.listen(port, () => {
-  console.log(`La API está corriendo en http://localhost:${port}`);
+app.listen(PORT, () => {
+  console.log(`La API está corriendo en http://localhost:${PORT}`);
 });
