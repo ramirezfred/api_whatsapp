@@ -6,7 +6,7 @@ const PruebaCtrl = require('../controllers/pruebas.ctrl');
 const pruebaCtrl = new PruebaCtrl();
 
 router.get('/test', pruebaCtrl.testCtrl);
-router.get('/qr', pruebaCtrl.generateQR);
+router.get('/qr', pruebaCtrl.getQR);
 router.get('/base64', pruebaCtrl.getBase64);
 router.post('/mensaje', pruebaCtrl.sendMsg);
 

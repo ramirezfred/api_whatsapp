@@ -2,6 +2,9 @@ const {Client} = require('whatsapp-web.js');
 const {LocalAuth} = require('whatsapp-web.js');
 const imageQr = require('qr-image');
 
+const fs = require('fs');
+const path = require('path');
+
 class PruebaCtrl {
 
   client;
@@ -115,6 +118,29 @@ class PruebaCtrl {
       qr : this.base64
     });
 
+  };
+
+  getQR = (req, res) => {
+    const filePath = path.join(__dirname, '../tmp', 'qr.svg');
+    const img = fs.readFileSync(filePath);
+    const imgBase64 = img.toString('base64');
+
+    const imgObject = {
+      base64: imgBase64
+    };
+
+    res.json(imgObject);
+  };
+
+  getQRDownload = (req, res) => {
+    const filePath = path.join(__dirname, '../tmp', 'qr.svg');
+    const img = fs.readFileSync(filePath);
+    
+    res.setHeader('Content-Disposition', 'attachment; filename=qr.svg');
+    res.setHeader('Content-Type', 'image/svg+xml');
+    res.setHeader('Content-Length', img.length);
+
+    res.send(img);
   };
 
 }
