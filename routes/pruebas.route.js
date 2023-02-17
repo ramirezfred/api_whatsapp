@@ -7,6 +7,7 @@ const pruebaCtrl = new PruebaCtrl();
 
 router.get('/test', pruebaCtrl.testCtrl);
 router.get('/qr', pruebaCtrl.getQR);
+router.get('/qr/download', pruebaCtrl.getQRDownload);
 router.get('/base64', pruebaCtrl.getBase64);
 router.post('/mensaje', pruebaCtrl.sendMsg);
 
