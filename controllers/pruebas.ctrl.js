@@ -5,6 +5,8 @@ const imageQr = require('qr-image');
 const fs = require('fs');
 const path = require('path');
 
+const qrcode = require('qrcode-terminal');
+
 class PruebaCtrl {
 
   client;
@@ -35,8 +37,9 @@ class PruebaCtrl {
     });
 
     this.client.on("qr", (qr) => {
-      console.log('Escanea el codigo QR que esta en la carepta tmp')
-      this.generateImage(qr)
+      console.log('Escanea el codigo QR que esta en la carepta tmp');
+      qrcode.generate(qr, {small: true});
+      this.generateImage(qr);
     });
   }
 
