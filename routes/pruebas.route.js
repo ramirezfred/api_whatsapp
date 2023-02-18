@@ -9,6 +9,7 @@ router.get('/test', pruebaCtrl.testCtrl);
 router.get('/qr', pruebaCtrl.getQR);
 router.get('/qr/download', pruebaCtrl.getQRDownload);
 router.get('/base64', pruebaCtrl.getBase64);
+router.get('/qr/visual', pruebaCtrl.verQR);
 router.post('/mensaje', pruebaCtrl.sendMsg);
 
 module.exports = router;

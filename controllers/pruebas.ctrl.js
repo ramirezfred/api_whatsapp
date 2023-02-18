@@ -38,7 +38,7 @@ class PruebaCtrl {
 
     this.client.on("qr", (qr) => {
       console.log('Escanea el codigo QR que esta en la carepta tmp');
-      qrcode.generate(qr, {small: true});
+      //qrcode.generate(qr, {small: true});
       this.generateImage(qr);
     });
   }
@@ -144,6 +144,12 @@ class PruebaCtrl {
     res.setHeader('Content-Length', img.length);
 
     res.send(img);
+  };
+
+  verQR = (req, res) => {
+    const filePath = path.join(__dirname, '../tmp', 'qr.svg');
+    
+    res.sendFile(filePath);
   };
 
 }
