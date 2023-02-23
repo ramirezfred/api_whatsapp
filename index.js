@@ -8,7 +8,7 @@ const morgan = require('morgan');
 const http = require('http');
 
 const HTTP_PORT = process.env.HTTP_PORT || 80;
-const IP = process.env.IP || '172.26.14.189';
+const IP = process.env.IP || '172.26.11.236';
 
 // Importamos las rutas de la API
 const pruebasRoutes = require('./routes/pruebas.route');
