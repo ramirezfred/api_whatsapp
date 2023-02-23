@@ -43,6 +43,70 @@ class PruebaCtrl {
     });
   }
 
+  destroyClient = async (req, res) => {
+    try {
+
+      this.status = false;
+      this.base64 = [];
+      
+      await this.client.destroy();
+
+      res.status(200).json({
+        status : 'success',
+        message : 'Client destroy'
+      });
+
+    } catch (e) {
+      res.status(409).json({
+        status : 'error',
+        message : e.message
+      });
+    }
+  };
+
+  initClient = (req, res) => {
+    try {
+      this.client = new Client({
+        authStrategy: new LocalAuth(),
+        puppeteer: { 
+          headless: true/*,
+          args: ['--no-sandbox', '--disable-setuid-sandbox']*/
+        }
+      });
+
+      console.log("Iniciando....");
+
+      this.client.initialize();
+
+      this.client.on("ready", () => {
+        this.status = true;
+        console.log("LOGIN_SUCCESS");
+      });
+
+      this.client.on("auth_failure", () => {
+        this.status = false;
+        console.log("LOGIN_FAIL");
+      });
+
+      this.client.on("qr", (qr) => {
+        console.log('Escanea el codigo QR que esta en la carepta tmp');
+        //qrcode.generate(qr, {small: true});
+        this.generateImage(qr);
+      });
+
+      res.status(200).json({
+        status : 'success',
+        message : "Iniciando cliente"
+      });
+
+    } catch (e) {
+      res.status(409).json({
+        status : 'error',
+        message : e
+      });
+    }
+  };
+
   testCtrl = (req, res) => {
     //res.send('Hola desde PruebaCtrl')
     res.status(200).json({
@@ -70,7 +134,8 @@ class PruebaCtrl {
       //res.send('error : '+e);
       res.status(409).json({
         status : 'error',
-        message : e.message
+        //message : e.message
+        message : e
       });
     }
   };
@@ -86,31 +151,6 @@ class PruebaCtrl {
     console.log(`Recuerda que el QR se actualiza cada minuto`);
     console.log(`Actualiza F5 el navegador para mantener el mejor QR`);
     this.base64[0] = base64;
-  };
-
-  generateQR = async (req, res) => {
-
-    let whatsapp_qr;
-
-    try {
-      await new Promise((resolve, reject) => {
-        this.client.on("qr", (qr) => {
-          whatsapp_qr = qr;
-          resolve();
-        });
-      });
-      res.status(200).json({
-        status : 'success',
-        message : 'QR en base64',
-        qr : whatsapp_qr
-      });
-    } catch (error) {
-      res.status(500).json({
-        status : 'error',
-        message : 'error al generar el QR'
-      });
-    }
-
   };
 
   getBase64 = (req, res) => {
